@@ -7,6 +7,7 @@ import com.intellij.plugins.bodhi.pmd.PMDUtil;
 import com.intellij.plugins.bodhi.pmd.PMDInvoker;
 import com.intellij.plugins.bodhi.pmd.PMDProjectComponent;
 import com.intellij.util.xml.ui.actions.DefaultAddAction;
+import org.apache.commons.lang.ArrayUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Properties;
@@ -36,6 +37,7 @@ public class PreDefinedMenuGroup extends ActionGroup {
 
     //The ruleset property file which lists all the predefined rulesets
     private static final String RULESETS_PROPERTY_FILE = "rulesets/java/rulesets.properties";
+    private static final String RULESETS_APEX_PROPERTY_FILE = "rulesets/apex/rulesets.properties";
     private static final String RULESETS_FILENAMES = "rulesets.filenames";
 
     /**
@@ -52,7 +54,11 @@ public class PreDefinedMenuGroup extends ActionGroup {
         try {
             //Load the property file which has all the rulesets.
             props.load(ResourceLoader.loadResourceAsStream(RULESETS_PROPERTY_FILE));
-            String[] rulesetFilenames = props.getProperty(RULESETS_FILENAMES).split(PMDInvoker.RULE_DELIMITER);
+            String[] javaRulesetFilenames = props.getProperty(RULESETS_FILENAMES).split(PMDInvoker.RULE_DELIMITER);
+
+            props.load(ResourceLoader.loadResourceAsStream(RULESETS_APEX_PROPERTY_FILE));
+            String[] apexRulesetFilenames = props.getProperty(RULESETS_FILENAMES).split(PMDInvoker.RULE_DELIMITER);
+            String[] rulesetFilenames = (String[]) ArrayUtils.addAll(javaRulesetFilenames, apexRulesetFilenames);
 
             //We have 'All' rules in addition to the rulesets
             //children = new AnAction[rulesetFilenames.length+1];

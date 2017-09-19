@@ -106,7 +106,7 @@ public class PMDInvoker {
                 return;
             }
             List<VirtualFileFilter> filters = new ArrayList<VirtualFileFilter>();
-            filters.add(fileHasExtension(JAVA_EXTENSION));
+            //filters.add(fileHasExtension(JAVA_EXTENSION));
             filters.add(fileInSources(project));
             if(projectComponent.isSkipTestSources())
             {
