@@ -38,6 +38,9 @@ public class PreDefinedMenuGroup extends ActionGroup {
     //The ruleset property file which lists all the predefined rulesets
     private static final String RULESETS_PROPERTY_FILE = "rulesets/java/rulesets.properties";
     private static final String RULESETS_APEX_PROPERTY_FILE = "rulesets/apex/rulesets.properties";
+    private static final String RULESETS_VF_PROPERTY_FILE = "rulesets/vf/rulesets.properties";
+    private static final String RULESETS_ECMASCRIPT_PROPERTY_FILE = "rulesets/ecmascript/rulesets.properties";
+
     private static final String RULESETS_FILENAMES = "rulesets.filenames";
 
     /**
@@ -55,10 +58,19 @@ public class PreDefinedMenuGroup extends ActionGroup {
             //Load the property file which has all the rulesets.
             props.load(ResourceLoader.loadResourceAsStream(RULESETS_PROPERTY_FILE));
             String[] javaRulesetFilenames = props.getProperty(RULESETS_FILENAMES).split(PMDInvoker.RULE_DELIMITER);
-
             props.load(ResourceLoader.loadResourceAsStream(RULESETS_APEX_PROPERTY_FILE));
             String[] apexRulesetFilenames = props.getProperty(RULESETS_FILENAMES).split(PMDInvoker.RULE_DELIMITER);
+            props.load(ResourceLoader.loadResourceAsStream(RULESETS_VF_PROPERTY_FILE));
+            String[] vfRulesetFilenames = props.getProperty(RULESETS_FILENAMES).split(PMDInvoker.RULE_DELIMITER);
+            props.load(ResourceLoader.loadResourceAsStream(RULESETS_ECMASCRIPT_PROPERTY_FILE));
+            String[] ecmaRulesetFilenames = props.getProperty(RULESETS_FILENAMES).split(PMDInvoker.RULE_DELIMITER);
+
+
+
+
             String[] rulesetFilenames = (String[]) ArrayUtils.addAll(javaRulesetFilenames, apexRulesetFilenames);
+            rulesetFilenames = (String[]) ArrayUtils.addAll(rulesetFilenames, vfRulesetFilenames);
+            rulesetFilenames = (String[]) ArrayUtils.addAll(rulesetFilenames, ecmaRulesetFilenames);
 
             //We have 'All' rules in addition to the rulesets
             //children = new AnAction[rulesetFilenames.length+1];
